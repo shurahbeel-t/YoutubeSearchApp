@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="foreground">#2e3440</color>
+    <color name="foreground90">#3b4252</color>
+    <color name="foreground80">#434c5e</color>
+    <color name="foreground70">#4c566a</color>
+    <color name="background">#eceff4</color>
+    <color name="background90">#e5e9f0</color>
+    <color name="background80">#d8dee9</color>
+    <color name="background70">#d8dee9</color>
+    <color name="button">#8fbcbb</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+</resources>
