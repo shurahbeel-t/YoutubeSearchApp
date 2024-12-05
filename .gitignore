@@ -1,0 +1,60 @@
+# Android Studio specific files
+.idea/
+*.iml
+.gradle/
+local.properties
+/.caches/
+/*.log
+
+# Android Build folders
+/build/
+*/build/
+*/output/
+
+# Gradle-specific files
+.gradle/
+**/*.apk
+**/*.ap_
+**/*.dex
+**/*.jar
+**/*.class
+**/*.so
+**/*.a
+**/*.o
+**/*.obj
+**/*.hprof
+
+# Dependency directories
+/.idea/libraries/
+/libs/
+/.apt_generated/
+/cxx/
+
+# IntelliJ IDEA specific files
+/out/
+/.idea/workspace.xml
+.idea/modules.xml
+.idea/navEditor.xml
+.idea/misc.xml
+.idea/dictionaries/
+
+# Keystore files (Do not track keystore files for security reasons)
+*.jks
+*.keystore
+
+# Generated files
+*.log
+*.lock
+*.csv
+*.pid
+*.gz
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Exclude crashlytics build info
+com_crashlytics_export_strings.xml
+
+# End of the file
