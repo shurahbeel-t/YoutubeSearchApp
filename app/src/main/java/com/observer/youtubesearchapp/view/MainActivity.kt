@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.View
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
@@ -12,6 +14,7 @@ import androidx.fragment.app.commit
 import androidx.lifecycle.lifecycleScope
 import com.observer.youtubesearchapp.R
 import com.observer.youtubesearchapp.databinding.ActivityMainBinding
+import com.observer.youtubesearchapp.viewmodel.SearchViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -20,14 +23,17 @@ class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     lateinit var displayMetrics: DisplayMetrics
     lateinit var searchFragment: Fragment
+    val searchViewModel: SearchViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         searchFragment = SearchResultsFragment()
         if (savedInstanceState == null) {
+            // val fragmentBundle = bundleOf("viewModel" to searchViewModel)
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
                 add(R.id.search_fragment_cv, searchFragment)
+                // add(R.id.search_fragment_cv, (SearchResultsFragment::class.java), fragmentBundle)
             }
         }
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -37,7 +43,7 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        lifecycleScope.launch(Dispatchers.Main){
+        lifecycleScope.launch(Dispatchers.Main) {
             delay(1000L)
 
             binding.apply {
