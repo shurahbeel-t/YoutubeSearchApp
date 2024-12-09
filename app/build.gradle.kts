@@ -18,6 +18,12 @@ android {
     }
 
     buildTypes {
+        debug {
+            // Appends ".debug" to the applicationId for debug builds
+            applicationIdSuffix = ".debug"
+            // Optional: Appends "-debug" to the version name
+            versionNameSuffix = "-debug"
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
@@ -51,5 +57,8 @@ dependencies {
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.glide)
     implementation(libs.androidx.recyclerview)
-
+    // google api java client (required? for youtube data api v3's library)
+    implementation(libs.google.api.client)
+    // youtube data api v3's google-generated java library
+    implementation(libs.google.api.services.youtube)
 }

@@ -6,7 +6,6 @@ import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
@@ -65,7 +64,6 @@ class MainActivity : AppCompatActivity() {
                 searchButton.visibility = View.GONE
             }
 
-
             binding.searchFragmentCv.apply {
                 translationY = displayMetrics.heightPixels * 1.0f
                 visibility = View.VISIBLE
@@ -75,6 +73,5 @@ class MainActivity : AppCompatActivity() {
                     .setDuration(1000L)
             }
         }
-
     }
 }
