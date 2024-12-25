@@ -2,7 +2,7 @@ package com.observer.youtubesearchapp.view
 
 import android.os.Bundle
 import android.util.DisplayMetrics
-import android.view.View
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -13,9 +13,9 @@ import androidx.fragment.app.commit
 import androidx.lifecycle.lifecycleScope
 import com.observer.youtubesearchapp.R
 import com.observer.youtubesearchapp.databinding.ActivityMainBinding
+import com.observer.youtubesearchapp.viewmodel.ApiCallState
 import com.observer.youtubesearchapp.viewmodel.SearchViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
@@ -43,6 +43,7 @@ class MainActivity : AppCompatActivity() {
             insets
         }
         lifecycleScope.launch(Dispatchers.Main) {
+            /* AutoLaunch with dummy data
             delay(1000L)
 
             binding.apply {
@@ -53,9 +54,9 @@ class MainActivity : AppCompatActivity() {
             }
 
             delay(750L)
-            /*// val screenWidthPx = displayMetrics.widthPixels
+            // val screenWidthPx = displayMetrics.widthPixels
             // val screenHeightPx = displayMetrics.heightPixels
-            // binding.searchFragment.translationX = screenWidthPx * 1.0f*/
+            // binding.searchFragment.translationX = screenWidthPx * 1.0f
             displayMetrics = resources.displayMetrics
 
             binding.apply {
@@ -71,7 +72,25 @@ class MainActivity : AppCompatActivity() {
                     // .translationX(0f)
                     .translationY(0f)
                     .setDuration(1000L)
+            }*/
+            searchViewModel.apiCallState.collect { state ->
+                when (state) {
+                    is ApiCallState.CallException -> {
+                        Log.e("custom", "Request exception: ${state.e.message}", state.e)
+                    }
+
+                    is ApiCallState.Failed -> {
+                        val errorBody = state.responseBody?.string()
+                        Log.e("custom", "Api call Failed:\n${errorBody}")
+                    }
+
+                    ApiCallState.Pending -> Log.v("custom", "Api call Pending")
+                    ApiCallState.Success -> Log.v("custom", "Api call Success")
+                }
             }
         }
+        searchViewModel.searchYoutube("Lofi Girl")
+
+        // I AM SO PRO
     }
 }

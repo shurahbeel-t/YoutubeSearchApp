@@ -1,11 +1,28 @@
 package com.observer.youtubesearchapp.viewmodel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.observer.youtubesearchapp.api.service.YoutubeApi
 import com.observer.youtubesearchapp.model.SearchResultEntry
 import com.observer.youtubesearchapp.model.VideoStatus
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
+
+sealed interface ApiCallState {
+    object Pending : ApiCallState
+    object Success : ApiCallState
+    data class Failed(val responseBody: okhttp3.ResponseBody?) : ApiCallState
+    data class CallException(val e: Exception) : ApiCallState
+}
 
 class SearchViewModel : ViewModel() {
-    fun searchYoutube(query: String): List<SearchResultEntry> {
+
+    private var _apiCallState = MutableStateFlow<ApiCallState>(ApiCallState.Pending)
+    val apiCallState: StateFlow<ApiCallState> = _apiCallState
+
+    fun getDummyData(query: String): List<SearchResultEntry> {
         return listOf(
             SearchResultEntry(
                 "Video01",
@@ -78,5 +95,21 @@ class SearchViewModel : ViewModel() {
                 "date"
             )
         )
+    }
+
+    fun searchYoutube(query: String): List<SearchResultEntry> {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val response = YoutubeApi.retrofitService.getSearchResponseVideos(query, 10)
+                if (response.isSuccessful) {
+                    _apiCallState.value = ApiCallState.Success
+                } else {
+                    _apiCallState.value = ApiCallState.Failed(response.errorBody())
+                }
+            } catch (e: Exception) {
+                _apiCallState.value = ApiCallState.CallException(e)
+            }
+        }
+        return listOf()
     }
 }

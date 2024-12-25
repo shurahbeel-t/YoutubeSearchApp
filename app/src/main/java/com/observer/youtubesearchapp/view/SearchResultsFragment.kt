@@ -43,7 +43,7 @@ class SearchResultsFragment : Fragment(R.layout.fragment_search_results) {
     }
 
     private fun updateSearchResults() {
-        searchResultAdapter.updateSearchResults(searchViewModel.searchYoutube("searchQuery"))
+        searchResultAdapter.updateSearchResults(searchViewModel.getDummyData("searchQuery"))
     }
 
     fun getDummyData(): ArrayList<SearchResultEntry> = arrayListOf(

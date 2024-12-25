@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.plugins.serialization)
 }
 
 android {
@@ -39,6 +40,14 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
+    packaging {
+        resources {
+            excludes += "META-INF/**.*"
+            excludes += "META-INF/*"
+            excludes += "META-INF/INDEX.LIST"
+            excludes += "META-INF/DEPENDENCIES"
+        }
+    }
 }
 
 dependencies {
@@ -55,10 +64,21 @@ dependencies {
 
     // custom
     implementation(libs.androidx.fragment.ktx)
-    implementation(libs.glide)
     implementation(libs.androidx.recyclerview)
+
+    // for image loading
+    implementation(libs.glide)
+    implementation(libs.okhttp)
+
     // google api java client (required? for youtube data api v3's library)
-    implementation(libs.google.api.client)
+    // implementation(libs.google.api.client) { exclude(group = "org.apache.httpcomponents") }
+    // implementation(libs.google.api.client.jackson2) { exclude(group = "org.apache.httpcomponents") }
+
     // youtube data api v3's google-generated java library
-    implementation(libs.google.api.services.youtube)
+    // implementation(libs.google.api.services.youtube) { exclude(group = "org.apache.httpcomponents") }
+
+    // for communicating with the yt api
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.kotlinx.serialization)
+    implementation(libs.kotlinx.serialization.json)
 }
