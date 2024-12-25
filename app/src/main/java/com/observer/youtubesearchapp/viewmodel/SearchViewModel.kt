@@ -9,8 +9,10 @@ import com.observer.youtubesearchapp.model.SearchResultEntry
 import com.observer.youtubesearchapp.model.VideoStatus
 import com.observer.youtubesearchapp.secrets.getSHA1
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 sealed interface ApiCallState {
@@ -106,6 +108,10 @@ class SearchViewModel : ViewModel() {
                 val response = YoutubeApi.retrofitService.getSearchResponseVideos(appContext.packageName, getSHA1(appContext) ?: "null", query, 10)
                 if (response.isSuccessful) {
                     _apiCallState.value = ApiCallState.Success
+                    launch{
+                        delay(250)
+                        _apiCallState.value = ApiCallState.Pending
+                    }
                     transformToSearchResultEntries(appContext, response.body())
                 } else {
                     _apiCallState.value = ApiCallState.Failed(response.errorBody())

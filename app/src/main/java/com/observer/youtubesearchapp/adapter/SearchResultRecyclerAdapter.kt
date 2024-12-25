@@ -34,11 +34,11 @@ class SearchResultRecyclerAdapter(var searchResultsList: ArrayList<SearchResultE
             entryBinding.apply {
                 title.text = searchResult.title
                 when (searchResult.status) {
-                    VideoStatus.LIVE -> {
+                    VideoStatus.Live -> {
                         timeOrCount.text = "live"
                     }
 
-                    VideoStatus.UPLOADED -> {
+                    VideoStatus.Uploaded -> {
                         timeOrCount.text = searchResult.timeOrCount
                     }
                 }
