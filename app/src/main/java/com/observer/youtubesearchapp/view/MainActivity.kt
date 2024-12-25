@@ -43,36 +43,13 @@ class MainActivity : AppCompatActivity() {
             insets
         }
         lifecycleScope.launch(Dispatchers.Main) {
-            /* AutoLaunch with dummy data
-            delay(1000L)
-
-            binding.apply {
-                val duration: Long = 750L
-                title.animate().setDuration(duration).alpha(0f)
-                searchBox.animate().setDuration(duration).alpha(0f)
-                searchButton.animate().setDuration(duration).alpha(0f)
+            // separating the child coroutine so the search method call does not block the collect method or vice-versa
+            launch {
+                val results = searchViewModel.searchYoutube(applicationContext, "Lofi Girl")
+                if(results.isNotEmpty()){
+                    // Do the magic
+                }
             }
-
-            delay(750L)
-            // val screenWidthPx = displayMetrics.widthPixels
-            // val screenHeightPx = displayMetrics.heightPixels
-            // binding.searchFragment.translationX = screenWidthPx * 1.0f
-            displayMetrics = resources.displayMetrics
-
-            binding.apply {
-                title.visibility = View.GONE
-                searchBox.visibility = View.GONE
-                searchButton.visibility = View.GONE
-            }
-
-            binding.searchFragmentCv.apply {
-                translationY = displayMetrics.heightPixels * 1.0f
-                visibility = View.VISIBLE
-                animate()
-                    // .translationX(0f)
-                    .translationY(0f)
-                    .setDuration(1000L)
-            }*/
             searchViewModel.apiCallState.collect { state ->
                 when (state) {
                     is ApiCallState.CallException -> {
@@ -89,8 +66,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-        searchViewModel.searchYoutube(applicationContext, "Lofi Girl")
-
-        // I AM SO PRO
+        // I AM SO PRO >:)
     }
 }

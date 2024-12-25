@@ -1,6 +1,6 @@
 package com.observer.youtubesearchapp.model
 
-enum class VideoStatus {
-    LIVE,
-    UPLOADED
+sealed interface VideoStatus {
+    object Live : VideoStatus
+    object Uploaded : VideoStatus
 }
