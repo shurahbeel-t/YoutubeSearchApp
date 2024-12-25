@@ -89,7 +89,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-        searchViewModel.searchYoutube("Lofi Girl")
+        searchViewModel.searchYoutube(applicationContext, "Lofi Girl")
 
         // I AM SO PRO
     }

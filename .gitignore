@@ -60,3 +60,4 @@ com_crashlytics_export_strings.xml
 # custom
 /app/reference_files/
 /app/src/main/java/com/observer/youtubesearchapp/keys
+/app/src/main/java/com/observer/youtubesearchapp/secrets

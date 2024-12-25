@@ -1,10 +1,13 @@
 package com.observer.youtubesearchapp.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.observer.youtubesearchapp.api.service.YoutubeApi
 import com.observer.youtubesearchapp.model.SearchResultEntry
 import com.observer.youtubesearchapp.model.VideoStatus
+import com.observer.youtubesearchapp.secrets.appSha1SignatureLowerCase
+import com.observer.youtubesearchapp.secrets.getSHA1
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -97,10 +100,10 @@ class SearchViewModel : ViewModel() {
         )
     }
 
-    fun searchYoutube(query: String): List<SearchResultEntry> {
+    fun searchYoutube(appContext: Context, query: String): List<SearchResultEntry> {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val response = YoutubeApi.retrofitService.getSearchResponseVideos(query, 10)
+                val response = YoutubeApi.retrofitService.getSearchResponseVideos(appContext.packageName, getSHA1(appContext), query, 10)
                 if (response.isSuccessful) {
                     _apiCallState.value = ApiCallState.Success
                 } else {
