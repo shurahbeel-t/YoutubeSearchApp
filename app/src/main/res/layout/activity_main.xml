@@ -9,37 +9,70 @@
     android:padding="8dp"
     tools:context=".view.MainActivity">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/title"
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/ib_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily=""
+        android:background="@drawable/round_arrow_back_ios_new_24"
+        android:backgroundTint="@color/foreground"
+        android:layout_marginStart="2dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/search_fragment_cv"
+        app:layout_constraintEnd_toStartOf="@id/et_search"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="@string/app_name"
         android:textColor="@color/foreground"
         android:textSize="28sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/searchBox"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/et_search"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/searchBox"
+        android:id="@+id/et_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="30dp"
+        android:backgroundTint="@null"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
         android:autofillHints="query,video,search,youtube,music"
         android:drawableStart="@drawable/round_search_24"
         android:hint="@string/search_hint"
+        android:imeOptions="actionSearch"
         android:inputType="textAutoComplete"
         android:textColorHint="@color/foreground70"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title" />
+        app:layout_constraintTop_toBottomOf="@id/tv_title" />
+    <!--<androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/et_temp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:autofillHints="query,video,search,youtube,music"
+        android:drawableStart="@drawable/round_search_24"
+        android:hint="@string/search_hint"
+        android:imeOptions="actionSearch"
+        android:inputType="textAutoComplete"
+        android:textColorHint="@color/foreground70"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.66375"/>-->
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/search_button"
+        android:id="@+id/btn_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="80dp"
@@ -58,10 +91,10 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/button_01"
-        android:backgroundTint="@color/background"
+        android:backgroundTint="@color/button"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:visibility="gone"/>
+        app:layout_constraintTop_toBottomOf="@id/et_search" />
 </androidx.constraintlayout.widget.ConstraintLayout>

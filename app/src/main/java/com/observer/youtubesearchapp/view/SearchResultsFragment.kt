@@ -4,12 +4,15 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.observer.youtubesearchapp.R
 import com.observer.youtubesearchapp.adapter.SearchResultRecyclerAdapter
 import com.observer.youtubesearchapp.adapter.SearchResultRecyclerDecorator
 import com.observer.youtubesearchapp.databinding.FragmentSearchResultsBinding
 import com.observer.youtubesearchapp.viewmodel.SearchViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class SearchResultsFragment : Fragment(R.layout.fragment_search_results) {
@@ -29,7 +32,6 @@ class SearchResultsFragment : Fragment(R.layout.fragment_search_results) {
         // why this here?
         fragmentBinding = FragmentSearchResultsBinding.bind(view)
         initSearchResults()
-        updateSearchResults()
     }
 
     private fun initSearchResults() {
@@ -40,7 +42,9 @@ class SearchResultsFragment : Fragment(R.layout.fragment_search_results) {
         }
     }
 
-    private fun updateSearchResults() {
-        searchResultAdapter.updateSearchResults(searchViewModel.getDummyData("searchQuery"))
+    public fun updateSearchResults(query: String) {
+        lifecycleScope.launch(Dispatchers.Main) {
+            searchResultAdapter.updateSearchResults(searchViewModel.getDummyData(query))
+        }
     }
 }

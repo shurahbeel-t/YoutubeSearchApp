@@ -32,18 +32,18 @@ class SearchResultRecyclerAdapter(var searchResultsList: ArrayList<SearchResultE
     class SearchResultViewHolder(private val entryBinding: LayoutSearchResultEntryBinding) : RecyclerView.ViewHolder(entryBinding.root) {
         fun bind(searchResult: SearchResultEntry) {
             entryBinding.apply {
-                title.text = searchResult.title
+                tvTitle.text = searchResult.title
                 when (searchResult.status) {
                     VideoStatus.Live -> {
-                        timeOrCount.text = "live"
+                        tvTimeOrCount.text = "live"
                     }
 
                     VideoStatus.Uploaded -> {
-                        timeOrCount.text = searchResult.timeOrCount
+                        tvTimeOrCount.text = searchResult.timeOrCount
                     }
                 }
-                date.text = searchResult.date
-                thumbnail.loadImage(searchResult.imgUrl)
+                tvDate.text = searchResult.date
+                ivThumbnail.loadImage(searchResult.imgUrl)
             }
         }
     }
