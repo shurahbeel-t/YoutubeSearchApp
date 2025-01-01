@@ -19,7 +19,6 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.lifecycle.lifecycleScope
 import com.observer.youtubesearchapp.R
@@ -33,7 +32,7 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var displayMetrics: DisplayMetrics
-    private lateinit var searchFragment: Fragment
+    private lateinit var searchFragment: SearchResultsFragment
     private val searchViewModel: SearchViewModel by viewModels()
 
     private var animationDuration: Long = 0
@@ -44,17 +43,15 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         if (savedInstanceState == null) {
             supportFragmentManager.commit {
-                val fragment = SearchResultsFragment()
+                searchFragment = SearchResultsFragment()
                 setReorderingAllowed(true)
-                add(R.id.search_fragment_cv, fragment)
+                add(R.id.search_fragment_cv, searchFragment)
             }
         }
 
         // inflating the binding
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        searchFragment = binding.searchFragmentCv.getFragment<SearchResultsFragment>()
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -182,15 +179,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun setStateListener() {
         lifecycleScope.launch(Dispatchers.Default) {
-            // separating the child coroutine so the search method call does not block the collect method or vice-versa
-            /*launch {
-                val results = searchViewModel.searchYoutube(applicationContext, "Lofi Girl")
-                if(results.isNotEmpty()){
-                    // Do the magic
-                }
-            }*/
-
-            // set state listener
             searchViewModel.apiCallState.collect { state ->
                 when (state) {
                     is ApiCallState.CallException -> {
@@ -203,16 +191,16 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     ApiCallState.Pending -> Log.v("custom", "Api call Pending")
-                    ApiCallState.Success -> Log.v("custom", "Api call Success")
+                    is ApiCallState.Success -> Log.v("custom", "Api call Success")
                 }
             }
         }
     }
 
     private fun performSearch(query: String) {
-        /*lifecycleScope.launch(Dispatchers.IO) {
-
-        }*/
+        lifecycleScope.launch(Dispatchers.IO) {
+            searchViewModel.searchYoutube(applicationContext, query)
+        }
     }
 
     private fun setSearchButtonListener() {

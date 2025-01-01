@@ -1,5 +1,6 @@
 package com.observer.youtubesearchapp.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -9,8 +10,10 @@ import com.observer.youtubesearchapp.model.VideoStatus
 
 class SearchResultRecyclerAdapter(var searchResultsList: ArrayList<SearchResultEntry>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     fun updateSearchResults(newResultsList: List<SearchResultEntry>) {
+        Log.v("custom", "newResultsList's size: ${newResultsList.size}")
         searchResultsList.clear()
         searchResultsList.addAll(newResultsList)
+        notifyDataSetChanged()
     }
 
 //    private var searchResultsList: MutableList<SearchResultEntry> = mutableListOf()
